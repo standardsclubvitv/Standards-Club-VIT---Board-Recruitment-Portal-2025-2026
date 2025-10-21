@@ -1,18 +1,21 @@
 {
   "version": 2,
-  "buildCommand": "echo 'No build needed'",
-  "outputDirectory": "public",
-  "routes": [
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
     {
-      "handle": "filesystem"
-    },
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ],
+  "redirects": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/public/$1"
+      "source": "/admin",
+      "destination": "/admin/",
+      "permanent": false
     }
   ]
 }
