@@ -1,0 +1,31 @@
+{
+  "name": "standards-club-recruitment",
+  "version": "1.0.0",
+  "description": "Standards Club VIT Vellore Board Recruitment Platform 2025-2026",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js",
+    "vercel-dev": "vercel dev",
+    "build": "echo 'No build step needed for static site'",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "standards-club",
+    "recruitment",
+    "vit-vellore",
+    "board-applications"
+  ],
+  "author": "Standards Club VIT Vellore",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^6.3.0",
+    "nodemailer": "^6.9.7",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.1"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

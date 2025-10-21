@@ -1,0 +1,9 @@
+node_modules
+.env.local
+.env
+server.js
+package-lock.json
+.git
+.gitignore
+*.md
+ADMIN_PANEL_GUIDE.md

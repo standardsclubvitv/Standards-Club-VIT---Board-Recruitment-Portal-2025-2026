@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Standards Club</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-container">
+      <div class="login-header">
+        <i class="fas fa-shield-alt"></i>
+        <h2>Admin Panel</h2>
+        <p>Standards Club Board Recruitment</p>
+      </div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="adminEmail">
+            <i class="fas fa-envelope"></i>
+            Email
+          </label>
+          <input 
+            type="email" 
+            id="adminEmail" 
+            required 
+            placeholder="admin@standardsclub.com"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label for="adminPassword">
+            <i class="fas fa-lock"></i>
+            Password
+          </label>
+          <input 
+            type="password" 
+            id="adminPassword" 
+            required 
+            placeholder="Enter password"
+          >
+        </div>
+        
+        <button type="submit" class="login-btn">
+          <i class="fas fa-sign-in-alt"></i>
+          Login
+        </button>
+        
+        <div id="loginError" class="error-message" style="display: none;"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Screen -->
+  <div id="dashboardScreen" class="dashboard-screen" style="display: none;">
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="header-content">
+        <div class="header-left">
+          <i class="fas fa-tachometer-alt"></i>
+          <h1>Admin Dashboard</h1>
+        </div>
+        <div class="header-right">
+          <button id="refreshBtn" class="icon-btn" title="Refresh Data">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+          <button id="logoutBtn" class="icon-btn" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="totalApplications">0</h3>
+          <p>Total Applications</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="todayApplications">0</h3>
+          <p>Today's Applications</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="uniqueApplicants">0</h3>
+          <p>Unique Applicants</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+          <i class="fas fa-briefcase"></i>
+        </div>
+        <div class="stat-content">
+          <h3 id="totalPositions">0</h3>
+          <p>Positions Applied</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-container">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Search by name, email, registration number, or application ID..."
+        >
+      </div>
+      
+      <div class="control-buttons">
+        <button id="downloadExcelBtn" class="download-btn">
+          <i class="fas fa-download"></i>
+          Download Excel
+        </button>
+        
+        <select id="filterPosition" class="filter-select">
+          <option value="">All Positions</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Applications Table -->
+    <div class="table-container">
+      <table id="applicationsTable">
+        <thead>
+          <tr>
+            <th>Application ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Registration No.</th>
+            <th>Phone</th>
+            <th>Positions</th>
+            <th>Submitted</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="applicationsBody">
+          <tr>
+            <td colspan="8" class="loading">
+              <i class="fas fa-spinner fa-spin"></i>
+              Loading applications...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- View Details Modal -->
+  <div id="detailsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-user-circle"></i> Application Details</h2>
+        <button class="close-btn" onclick="closeDetailsModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="detailsBody" class="modal-body">
+        <!-- Details will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/admin.js"></script>
+</body>
+</html>
