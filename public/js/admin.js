@@ -473,7 +473,9 @@ window.viewDetails = function(applicationId) {
     // Check if answers exist
     const hasAnswers = pos.answers && typeof pos.answers === 'object';
     const hasMotivation = pos.motivation && pos.motivation.trim().length > 0;
-    const hasDomainAnswers = pos.domainAnswers && pos.domainAnswers.trim().length > 0;
+    // Check for domain answers in new array format or old string format
+    const hasDomainAnswers = (Array.isArray(pos.domainAnswers) && pos.domainAnswers.length > 0) || 
+                             (typeof pos.domainAnswers === 'string' && pos.domainAnswers.trim().length > 0);
     
     detailsHTML += `
       <div class="detail-section">
@@ -503,20 +505,41 @@ window.viewDetails = function(applicationId) {
         
         <!-- Domain Answers (50+ words) -->
         ${hasDomainAnswers ? `
-        <div class="question-card" style="border-left-color: ${colors[index]};">
-          <div class="question-header" style="background: rgba(${index === 0 ? '102, 126, 234' : index === 1 ? '245, 87, 108' : '79, 172, 254'}, 0.1);">
-            <i class="fas fa-puzzle-piece"></i>
-            Domain-Specific Questions & Answers
-          </div>
-          <div class="answer-content">
-            ${pos.domainAnswers}
-          </div>
-          <div style="padding: 0.5rem 1.5rem; border-top: 1px solid var(--border); background: rgba(0,0,0,0.02);">
-            <small style="color: var(--text-gray);">
-              <i class="fas fa-text-width"></i> Word count: ${getWordCount(pos.domainAnswers)} words
-            </small>
-          </div>
-        </div>
+          ${Array.isArray(pos.domainAnswers) ? 
+            // New format: Array of {question, answer} objects
+            pos.domainAnswers.map((qa, idx) => `
+              <div class="question-card" style="border-left-color: ${colors[index]};">
+                <div class="question-header" style="background: rgba(${index === 0 ? '102, 126, 234' : index === 1 ? '245, 87, 108' : '79, 172, 254'}, 0.1);">
+                  <i class="fas fa-lightbulb"></i>
+                  Question ${idx + 1}: ${qa.question}
+                </div>
+                <div class="answer-content">
+                  ${qa.answer}
+                </div>
+                <div style="padding: 0.5rem 1.5rem; border-top: 1px solid var(--border); background: rgba(0,0,0,0.02);">
+                  <small style="color: var(--text-gray);">
+                    <i class="fas fa-text-width"></i> Word count: ${getWordCount(qa.answer)} words
+                  </small>
+                </div>
+              </div>
+            `).join('')
+            :
+            // Old format: Single string
+            `<div class="question-card" style="border-left-color: ${colors[index]};">
+              <div class="question-header" style="background: rgba(${index === 0 ? '102, 126, 234' : index === 1 ? '245, 87, 108' : '79, 172, 254'}, 0.1);">
+                <i class="fas fa-puzzle-piece"></i>
+                Domain-Specific Questions & Answers
+              </div>
+              <div class="answer-content">
+                ${pos.domainAnswers}
+              </div>
+              <div style="padding: 0.5rem 1.5rem; border-top: 1px solid var(--border); background: rgba(0,0,0,0.02);">
+                <small style="color: var(--text-gray);">
+                  <i class="fas fa-text-width"></i> Word count: ${getWordCount(pos.domainAnswers)} words
+                </small>
+              </div>
+            </div>`
+          }
         ` : ''}
         
         <!-- Old structure (General Questions) - for backward compatibility -->

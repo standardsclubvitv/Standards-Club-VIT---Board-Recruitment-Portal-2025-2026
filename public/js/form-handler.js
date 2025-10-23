@@ -440,13 +440,16 @@ function collectFormData() {
         const motivationTextarea = document.getElementById(`motivation-${positionData.id}`);
         const motivation = motivationTextarea ? motivationTextarea.value.trim() : '';
 
-        // Get domain answers
-        const domainAnswers = [];
+        // Get domain answers with questions
+        const domainAnswersArray = [];
         if (positionData.domainQuestions && positionData.domainQuestions.length > 0) {
-          positionData.domainQuestions.forEach((_, index) => {
+          positionData.domainQuestions.forEach((question, index) => {
             const textarea = document.getElementById(`domain-${positionData.id}-${index}`);
-            if (textarea) {
-              domainAnswers.push(`Q${index + 1}: ${textarea.value.trim()}`);
+            if (textarea && textarea.value.trim()) {
+              domainAnswersArray.push({
+                question: question,
+                answer: textarea.value.trim()
+              });
             }
           });
         }
@@ -455,7 +458,11 @@ function collectFormData() {
           positionName: positionData.name,
           preference: i,
           motivation: motivation,
-          domainAnswers: domainAnswers.join('\n\n')
+          domainAnswers: domainAnswersArray,
+          // Also keep text version for backward compatibility
+          domainAnswersText: domainAnswersArray.map((qa, idx) => 
+            `Q${idx + 1}: ${qa.question}\nA${idx + 1}: ${qa.answer}`
+          ).join('\n\n')
         });
       }
     }

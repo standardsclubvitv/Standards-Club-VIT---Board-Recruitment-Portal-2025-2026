@@ -100,27 +100,31 @@ async function sendConfirmationEmail(application) {
 <html>
 <head>
   <style>
-    body { font-family: 'Inter', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f4f4f4; }
+    body { font-family: 'Inter', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f4f4f4; margin: 0; padding: 0; }
     .container { max-width: 600px; margin: 20px auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .header { background: linear-gradient(135deg, #ffc700 0%, #ffb700 100%); padding: 30px; text-align: center; color: white; }
-    .header h1 { margin: 0; font-size: 24px; font-weight: 700; }
+    .header { background: linear-gradient(135deg, #ffc700 0%, #ffb700 100%); padding: 40px 30px; text-align: center; color: white; }
+    .header-logo { width: 80px; height: 80px; margin-bottom: 20px; border-radius: 50%; background: white; padding: 10px; }
+    .header h1 { margin: 10px 0 0 0; font-size: 24px; font-weight: 700; }
+    .header p { margin: 10px 0 0 0; font-size: 16px; opacity: 0.95; }
     .content { padding: 30px; }
-    .detail-box { background: #f9f9f9; border-left: 4px solid #ffc700; padding: 15px; margin: 20px 0; }
+    .detail-box { background: #f9f9f9; border-left: 4px solid #ffc700; padding: 15px; margin: 20px 0; border-radius: 4px; }
     .detail-box h3 { margin-top: 0; color: #ffc700; font-size: 16px; }
     .detail-item { margin: 8px 0; }
     .detail-item strong { color: #555; }
     .positions-list { background: #fff9e6; padding: 15px; border-radius: 5px; margin: 15px 0; }
-    .next-steps { background: #e6f7ff; border-left: 4px solid #1890ff; padding: 15px; margin: 20px 0; }
-    .footer { background: #0f0f1e; color: #e0e0e0; padding: 20px; text-align: center; font-size: 14px; }
+    .next-steps { background: #e6f7ff; border-left: 4px solid #1890ff; padding: 15px; margin: 20px 0; border-radius: 4px; }
+    .footer { background: #0f0f1e; color: #e0e0e0; padding: 25px 20px; text-align: center; font-size: 14px; }
     .footer a { color: #ffc700; text-decoration: none; }
+    .support-link { display: inline-block; margin-top: 10px; padding: 8px 16px; background: #ffc700; color: #0f0f1e; text-decoration: none; border-radius: 4px; font-weight: 600; }
     .divider { border: none; border-top: 2px solid #ffc700; margin: 20px 0; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
+      <img src="https://standardsclubvitv.github.io/image-api/images/logo_club.png" alt="Standards Club Logo" class="header-logo">
       <h1>✓ Application Received Successfully</h1>
-      <p style="margin: 10px 0 0 0; font-size: 16px;">Standards Club Board Recruitment 2025-2026</p>
+      <p>Standards Club Board Recruitment 2025-2026</p>
     </div>
     
     <div class="content">
@@ -155,14 +159,23 @@ async function sendConfirmationEmail(application) {
         <p style="margin: 5px 0;">If you have any queries regarding your application, feel free to contact us:</p>
         <div class="detail-item">📧 Email: <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #ffc700;">${process.env.ADMIN_EMAIL}</a></div>
         <div class="detail-item">📱 Phone: ${process.env.ADMIN_PHONE}</div>
+        <div class="detail-item">💬 Support: <a href="mailto:support@standardsvit.live" style="color: #ffc700;">support@standardsvit.live</a></div>
       </div>
       
       <p style="margin-top: 30px;">Best Regards,<br><strong>Standards Club VIT Vellore</strong></p>
+      
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="https://www.standardsvit.live/" class="support-link">Visit Our Website</a>
+      </div>
     </div>
     
     <div class="footer">
-      <p>Standards Club VIT Vellore<br>
+      <p><strong>Standards Club VIT Vellore</strong><br>
       Building Excellence, Setting Standards</p>
+      <p style="margin-top: 15px;">
+        <a href="https://www.standardsvit.live/" style="color: #ffc700;">www.standardsvit.live</a> | 
+        <a href="mailto:support@standardsvit.live" style="color: #ffc700;">support@standardsvit.live</a>
+      </p>
       <p style="margin-top: 10px; font-size: 12px; color: #888;">
         This is an automated email. Please do not reply directly to this message.
       </p>
