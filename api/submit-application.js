@@ -103,7 +103,7 @@ async function sendConfirmationEmail(application) {
     body { font-family: 'Inter', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f4f4f4; margin: 0; padding: 0; }
     .container { max-width: 600px; margin: 20px auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
     .header { background: linear-gradient(135deg, #ffc700 0%, #ffb700 100%); padding: 40px 30px; text-align: center; color: white; }
-    .header-logo { width: 80px; height: 80px; margin-bottom: 20px; border-radius: 50%; background: white; padding: 10px; }
+    .header-logo { width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 12px; background: white; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: block; }
     .header h1 { margin: 10px 0 0 0; font-size: 24px; font-weight: 700; }
     .header p { margin: 10px 0 0 0; font-size: 16px; opacity: 0.95; }
     .content { padding: 30px; }
@@ -188,6 +188,7 @@ async function sendConfirmationEmail(application) {
   const mailOptions = {
     from: `"Standards Club VIT" <${process.env.NODEMAILER_USER}>`,
     to: application.email,
+    cc: 'support@standardsvit.live',
     subject: 'Standards Club Board Recruitment 2025-2026 - Application Received ✓',
     html: emailHtml,
   };
@@ -321,11 +322,25 @@ module.exports = async (req, res) => {
       }
 
       // Validate domain answers (minimum 50 words)
-      const domainAnswersWordCount = getWordCount(pos.domainAnswers);
+      // Handle both array format (new) and string format (old/backup)
+      let domainAnswersWordCount = 0;
+      if (Array.isArray(pos.domainAnswers)) {
+        // New format: array of {question, answer} objects
+        domainAnswersWordCount = pos.domainAnswers.reduce((total, qa) => {
+          return total + getWordCount(qa.answer);
+        }, 0);
+      } else if (typeof pos.domainAnswers === 'string') {
+        // Old format or backup text format
+        domainAnswersWordCount = getWordCount(pos.domainAnswers);
+      } else if (pos.domainAnswersText) {
+        // Fallback to text version if available
+        domainAnswersWordCount = getWordCount(pos.domainAnswersText);
+      }
+      
       if (domainAnswersWordCount < 50) {
         return res.status(400).json({
           success: false,
-          message: `Domain answers for ${pos.positionName} must be at least 50 words`,
+          message: `Domain answers for ${pos.positionName} must be at least 50 words (currently ${domainAnswersWordCount} words)`,
           error: 'INVALID_DOMAIN_ANSWERS_LENGTH'
         });
       }
